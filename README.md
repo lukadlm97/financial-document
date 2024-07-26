@@ -28,7 +28,7 @@ The application leverages Minimal API for simplicity, while MediatR decouples th
 - **Onion Architecture**: For maintaining a clear separation of concerns.
 
 ## Highlites
-- **Validation Performance**: Mediator behavior is used for validation performance measurement.
+- **Validation & Performance**: Mediator behavior is used for validation & performance measurement.
 - **Flexible Repository**: The repository pattern is built around an in-memory database, allowing for easy changes to other data sources via Dependency Injection.
 - **Exception Handling**: Business rules are enforced with exceptions, though a result pattern is generally preferred for error handling.
 
@@ -39,9 +39,9 @@ The application leverages Minimal API for simplicity, while MediatR decouples th
 - .NET 8.0
 
 ## Test cases
-happy path: ProductA, guid, guid
-product not enabled: ProductC, guid, guid
-product not exist: ProductD, guid, guid
-tenant not whitelisted: ProductA, guid4, guid
-client not exist: ProductA, guid2, guid3
-company size is small: ProducA, guid2, guid2
+- happy path: ProductA, guid, guid
+- product not enabled: ProductC, guid, guid
+- product not exist: ProductD, guid, guid
+- tenant not whitelisted: ProductA, guid4, guid
+- client not exist: ProductA, guid2, guid3
+- company size is small: ProducA, guid2, guid2
