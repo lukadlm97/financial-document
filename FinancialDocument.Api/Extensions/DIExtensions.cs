@@ -56,10 +56,9 @@ public static class DIExtensions
             }
             catch (Exception ex)
             {
-                var logger = services.GetRequiredService<ILogger>();
-                if (logger.IsEnabled(LogLevel.Error))
+                if (app.Logger.IsEnabled(LogLevel.Error))
                 {
-                    logger.LogError(ex, "An error occurred seeding the DB. {exceptionMessage}", ex.Message);
+                    app.Logger.LogError(ex, "An error occurred seeding the DB. {exceptionMessage}", ex.Message);
                 }
             }
         }
