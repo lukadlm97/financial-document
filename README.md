@@ -38,10 +38,13 @@ The application leverages Minimal API for simplicity, while MediatR decouples th
 ## Prerequisites
 - .NET 8.0
 
-## Test cases
-- happy path: ProductA, guid, guid
-- product not enabled: ProductC, guid, guid
-- product not exist: ProductD, guid, guid
-- tenant not whitelisted: ProductA, guid4, guid
-- client not exist: ProductA, guid2, guid3
-- company size is small: ProducA, guid2, guid2
+## Test Cases
+
+Note that it is not possible to test it through Swagger because Swagger does not have an option to set the content-type property for the response. Use Postman for testing:
+
+- **Happy path:** `{"productId": "ProductA", "tenantId": "guid", "documentId": "guid"}`
+- **Product not enabled:** `{"productId": "ProductC", "tenantId": "guid", "documentId": "guid"}`
+- **Product does not exist:** `{"productId": "ProductD", "tenantId": "guid", "documentId": "guid"}`
+- **Tenant not whitelisted:** `{"productId": "ProductA", "tenantId": "guid4", "documentId": "guid"}`
+- **Client does not exist:** `{"productId": "ProductA", "tenantId": "guid2", "documentId": "guid3"}`
+- **Company size is small:** `{"productId": "ProductA", "tenantId": "guid2", "documentId": "guid2"}`
