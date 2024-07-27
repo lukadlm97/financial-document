@@ -12,7 +12,7 @@ public class GetDocument : IEndpoint
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost($"api/financialDocument", async ([FromServices] IMediator mediator, [FromBody] GetDocumentRequestDto request) =>
+        app.MapGet($"api/financialDocument", async ([FromServices] IMediator mediator, [FromBody] GetDocumentRequestDto request) =>
         {
             return await mediator.Send(new GetDocumentRequest(request.ProductCode, request.TenantId, request.DocumentId));
         });
