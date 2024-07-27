@@ -1,5 +1,4 @@
 ﻿namespace FinancialDocument.Domain.Enums;
-
 public enum CompanySize
 {
     Small = 1,

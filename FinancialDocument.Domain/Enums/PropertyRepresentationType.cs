@@ -1,5 +1,4 @@
 ﻿namespace FinancialDocument.Domain.Enums;
-
 public enum PropertyRepresentationType
 {
     Mask = 1,

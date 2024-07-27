@@ -1,7 +1,6 @@
-﻿using FinancialDocument.Application.Contracts.DTOs;
-using FinancialDocument.Application.Contracts.Repositories;
+﻿using FinancialDocument.Application.Contracts.Repositories;
 using FinancialDocument.Application.Contracts.Services;
-using FinancialDocument.Domain.Exceptions;
+using FinancialDocument.Domain.Entities;
 using FinancialDocument.Infrastructure.Services;
 using FinancialDocument.Infrastructure.UnitTests.Mocks;
 using Moq;
@@ -10,8 +9,8 @@ namespace FinancialDocument.Infrastructure.UnitTests.Services;
 
 public class ClientServiceTest
 {
-    private readonly Mock<IClientRepository> _clientRepositoryMock;
-    private readonly Mock<ITenantRepository> _tenantRepositoryMock;
+    private readonly Mock<IDataRepository<Client>> _clientRepositoryMock;
+    private readonly Mock<IDataRepository<Tenant>> _tenantRepositoryMock;
     private readonly CancellationToken _token;
 
     public ClientServiceTest()
@@ -31,7 +30,7 @@ public class ClientServiceTest
 
         Assert.NotNull(client);
         Assert.Equal("guid1", client.Id);
-        Assert.Equal("test1", client.VAT);
+        Assert.Equal("test1", client.Vat);
     }
 
     [Theory]

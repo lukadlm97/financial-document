@@ -8,7 +8,7 @@ public class Client
     public int Id { get; set; }
     public string UniqueIdentifier { get; set; }
     public string Name { get; set; }
-    public string VAT { get; set; }
+    public string Vat { get; set; }
     public int? CompanyId { get; set; }
 
 

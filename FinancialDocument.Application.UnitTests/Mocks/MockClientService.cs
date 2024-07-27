@@ -22,7 +22,7 @@ public class MockClientService
                     DocumentId = 1,
                     IsWhitelisted = true,
                     UniqueIdentifier = "guid",
-                    Client =  new Client() { Id = 1, Name = "Client1", UniqueIdentifier = "guid", VAT = "test1",
+                    Client =  new Client() { Id = 1, Name = "Client1", UniqueIdentifier = "guid", Vat = "test1",
                     Company = new Company() { Id = 1, Name = "Company1", RegistrationNumber = "test1", CompanySizeId = 2 }},
                     Document =  document1,
                 },
@@ -33,7 +33,7 @@ public class MockClientService
                     DocumentId = 2,
                     IsWhitelisted = true,
                     UniqueIdentifier = "guid2",
-                    Client=  new Client() { Id = 2, Name = "Client2", UniqueIdentifier = "guid2", VAT = "test2",
+                    Client=  new Client() { Id = 2, Name = "Client2", UniqueIdentifier = "guid2", Vat = "test2",
                     Company = new Company() { Id = 2, Name = "Company2", RegistrationNumber = "test2", CompanySizeId = 2 } },
                     Document =document1
                 },
@@ -44,7 +44,7 @@ public class MockClientService
                     DocumentId = 3,
                     IsWhitelisted = true,
                     UniqueIdentifier = "guid3",
-                    Client =  new Client() { Id = 3, Name = "Client3", UniqueIdentifier = "guid3", VAT = "test3", Company = company3 },
+                    Client =  new Client() { Id = 3, Name = "Client3", UniqueIdentifier = "guid3", Vat = "test3", Company = company3 },
                     Document = new Document() { Id = 2, Name = "Document2", UniqueIdentifier = "guid2" }
                 },
                 new Tenant()
@@ -54,7 +54,7 @@ public class MockClientService
                     DocumentId = 1,
                     IsWhitelisted = true,
                     UniqueIdentifier = "guid4",
-                    Client =    new Client() { Id = 4, Name = "Client4", UniqueIdentifier = "guid4", VAT = "test4", Company = company3 },
+                    Client =    new Client() { Id = 4, Name = "Client4", UniqueIdentifier = "guid4", Vat = "test4", Company = company3 },
                     Document = new Document() { Id = 3, Name = "Document3", UniqueIdentifier = "guid3" }
                 }
             };
@@ -66,7 +66,7 @@ public class MockClientService
                 var tenant = tenants.FirstOrDefault(x=>x.UniqueIdentifier.Equals(tenantId, StringComparison.OrdinalIgnoreCase) && x.Document.UniqueIdentifier.Equals(documentId, StringComparison.OrdinalIgnoreCase));
                 if (tenant != null && tenant.Client != null)
                 { 
-                    return new ClientMain(tenant.Client.UniqueIdentifier, tenant.Client.VAT); 
+                    return new ClientMain(tenant.Client.UniqueIdentifier, tenant.Client.Vat); 
                 }
                 return null;
             });
@@ -76,10 +76,10 @@ public class MockClientService
             .ReturnsAsync((string VAT, CancellationToken cancellationToken
              ) =>
             {
-                var client = tenants.Select(x=>x.Client).FirstOrDefault(x=>x.VAT.Equals(VAT, StringComparison.OrdinalIgnoreCase));
+                var client = tenants.Select(x=>x.Client).FirstOrDefault(x=>x.Vat.Equals(VAT, StringComparison.OrdinalIgnoreCase));
                 if (client != null && client.Company != null)
                 {
-                    return new ClientDetails(client.UniqueIdentifier, client.VAT, client.Company.RegistrationNumber, client.Company.CompanySize.ToString(), client.Company.CompanySize);
+                    return new ClientDetails(client.UniqueIdentifier, client.Vat, client.Company.RegistrationNumber, client.Company.CompanySize.ToString(), client.Company.CompanySize);
                 }
                 return null;
             });

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using CompanySizeEnum = FinancialDocument.Domain.Enums.CompanySize;
 
 namespace FinancialDocument.Domain.Entities;

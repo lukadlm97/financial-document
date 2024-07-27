@@ -1,4 +1,4 @@
-﻿using FinancialDocument.Domain.Exceptions;
+﻿using FinancialDocument.Api.Handlers;
 using FinancialDocument.Persistance;
 using FluentValidation;
 using System.Reflection;
@@ -24,6 +24,13 @@ public static class DIExtensions
             }
         }
     }
+    public static void RegisterExceptionHandlers(this IServiceCollection services)
+    {
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddExceptionHandler<ValidationExceptionHandler>();
+        services.AddExceptionHandler<NotFoundExceptionHandler>();
+    }
+
 
     public static void UseEndpoints(this WebApplication app)
     {
@@ -62,30 +69,5 @@ public static class DIExtensions
                 }
             }
         }
-    }
-
-    public static void UseExceptionMiddleware(this WebApplication app)
-    {
-        app.Use(async (context, next) =>
-        {
-            try
-            {
-                await next();
-            }
-            catch (ValidationException ex)
-            {
-                context.Response.StatusCode = 403;
-                await context.Response.WriteAsync(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                if (ex is DocumentNotFoundException
-                    || ex is ClientDetailsNotFoundException)
-                {
-                    context.Response.StatusCode = 404;
-                    await context.Response.WriteAsync(ex.Message);
-                }
-            }
-        });
     }
 }

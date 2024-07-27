@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 
 using FinancialDocument.Application.Behaviours;
+using FinancialDocument.Application.Configurations;
 
 
 namespace FinancialDocument.Application.Extensions;
@@ -24,5 +25,6 @@ public static class DIExtensions
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
 
+        serviceCollection.Configure<PerformanceThresholdSettings>(configuration.GetSection(nameof(PerformanceThresholdSettings)));
     }
 }

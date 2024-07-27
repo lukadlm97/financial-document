@@ -1,10 +1,10 @@
-﻿using FinancialDocument.Application.Contracts.Services;
-using FinancialDocument.Infrastructure.Services;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FinancialDocument.Infrastructure.Extensions;
+using FinancialDocument.Application.Contracts.Services;
+using FinancialDocument.Infrastructure.Services;
 
+namespace FinancialDocument.Infrastructure.Extensions;
 public static class DIExtensions
 {
     public static void ConfigureInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)

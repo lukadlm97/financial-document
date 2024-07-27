@@ -2,14 +2,25 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
+using FinancialDocument.Application.Contracts.DTOs;
+
 namespace FinancialDocument.Application.Extensions;
 
 public static class StringExtensions
 {
-    public static string AnonymizeJson(this string json, IReadOnlyList<string> unchangedProperties, IReadOnlyList<string> hashedProperties)
+    public static string AnonymizeJson(this string json, List<PropertySettings> productProperties)
     {
+        var unchangedProperties = productProperties
+                                    .Where(x => x.Type == Domain.Enums.PropertyRepresentationType.Unchanged)
+                                    .Select(x => x.Name)
+                                    .ToHashSet();
+        var hashedProperties = productProperties
+                                .Where(x => x.Type == Domain.Enums.PropertyRepresentationType.Hash)
+                                .Select(x => x.Name)
+                                .ToHashSet();
+
         // Regex to match all JSON properties and values
-        string pattern = @"""([^""]+)"":\s*(""[^""]*""|\d+(\.\d+)?|\[|\{|\}|[^\],\s]+)";
+        string pattern = @"""([^""]+)"":\s*((""[^""]*""|\d+(\.\d+)?|\[.*?\]|\{.*?\}|[^\],\s]+))";
 
         string result = Regex.Replace(json, pattern, match =>
         {
@@ -25,6 +36,10 @@ public static class StringExtensions
                 string hashedValue = HashValue(propertyValue.Trim('"'));
                 return $"\"{propertyName}\": \"{hashedValue}\"";
             }
+            else if (IsListValue(propertyValue) || IsObjectValue(propertyValue))
+            {
+                return $"\"{propertyName}\": {propertyValue}";
+            }
             else
             {
                 return $"\"{propertyName}\": \"####\"";
@@ -32,6 +47,16 @@ public static class StringExtensions
         });
 
         return result;
+    }
+
+    private static bool IsListValue(string value)
+    {
+        return value.Trim().StartsWith("[") && value.Trim().EndsWith("]");
+    }
+
+    private static bool IsObjectValue(string value)
+    {
+        return value.Trim().StartsWith("{") && value.Trim().EndsWith("}");
     }
 
     static string HashValue(string value)
@@ -48,3 +73,4 @@ public static class StringExtensions
         }
     }
 }
+

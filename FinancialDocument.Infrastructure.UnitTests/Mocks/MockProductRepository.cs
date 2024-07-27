@@ -6,9 +6,9 @@ namespace FinancialDocument.Infrastructure.UnitTests.Mocks;
 
 internal class MockProductRepository
 {
-    public static Mock<IProductRepository> GetProductRepository()
+    public static Mock<IDataRepository<Product>> GetProductRepository()
     {
-        var mockRepository = new Mock<IProductRepository>();
+        var mockRepository = new Mock<IDataRepository<Product>>();
 
 
         var product1 = new Product() { Id = 1, Code = "ProductA", Name = "Product1", IsEnabled = true };
@@ -22,8 +22,8 @@ internal class MockProductRepository
         };
 
 
-        mockRepository.Setup(r => r.GetAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(products);
+        mockRepository.Setup(r => r.Get())
+            .Returns(products.AsQueryable);
 
         return mockRepository;
     }

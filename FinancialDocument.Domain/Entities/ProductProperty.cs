@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using PropertyRepresentationTypeEnum = FinancialDocument.Domain.Enums.PropertyRepresentationType;
 
 namespace FinancialDocument.Domain.Entities;

@@ -15,21 +15,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.RegisterEndpoints();
+builder.Services.RegisterExceptionHandlers();
 
 builder.Services.ConfigureApplication(builder.Configuration);
 builder.Services.ConfigurePersistance(builder.Configuration);
 builder.Services.ConfigureInfrastructure(builder.Configuration);
 
-var app = builder.Build();
 
+var app = builder.Build();
 app.SeedInMemoryDB();
 
 app.UseHttpLogging();
 
+app.UseExceptionHandler((_ => { }));
+
 app.UseSwagger();
 app.UseSwaggerUI();
-
-app.UseExceptionMiddleware();
 
 app.UseEndpoints();
 

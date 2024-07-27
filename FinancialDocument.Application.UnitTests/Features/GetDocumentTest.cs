@@ -14,7 +14,7 @@ public class GetDocumentTest
     private readonly Mock<ITenantService> _tenantServiceMock;
     private readonly Mock<IProductService> _productServiceMock;
     private readonly Mock<IDocumentFetcher> _documentServiceMock;
-    private readonly Mock<IDataEntry<ProductProperty>> _productPropertyRepositreMock;
+    private readonly Mock<IDataRepository<ProductProperty>> _productPropertyRepositreMock;
     private readonly CancellationToken _token;
 
     public GetDocumentTest()

@@ -14,7 +14,7 @@ public class GetDocument : IEndpoint
     {
         app.MapPost($"api/financialDocument", async ([FromServices] IMediator mediator, [FromBody] GetDocumentRequestDto request) =>
         {
-            return await mediator.Send(new GetDocumentRequest(request.ProductCode, request.TenandId, request.DocumentId));
+            return await mediator.Send(new GetDocumentRequest(request.ProductCode, request.TenantId, request.DocumentId));
         });
     }
 }

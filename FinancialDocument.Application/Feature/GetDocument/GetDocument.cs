@@ -7,6 +7,7 @@ using FinancialDocument.Application.Contracts.Repositories;
 using FinancialDocument.Application.Contracts.Services;
 using FinancialDocument.Application.Extensions;
 using FinancialDocument.Application.Feature.Shared;
+using FinancialDocument.Application.Contracts.DTOs;
 using FinancialDocument.Domain.Entities;
 using FinancialDocument.Domain.Exceptions;
 
@@ -34,7 +35,7 @@ public class GetDocument
     }
     public class GetDocumentRequestHandler(IClientService _clientService, 
                                             IDocumentFetcher _documentFetcher,
-                                            IDataEntry<ProductProperty> _productPropertyRepository) : IRequestHandler<GetDocumentRequest, GetDocumentResponse>
+                                            IDataRepository<ProductProperty> _productPropertyRepository) : IRequestHandler<GetDocumentRequest, GetDocumentResponse>
     {
         public async Task<GetDocumentResponse> Handle(GetDocumentRequest request, CancellationToken cancellationToken)
         {
@@ -47,7 +48,7 @@ public class GetDocument
             }
 
             // Fetch Additional Client Information:
-            var additionalClientInformation = await _clientService.GetDetailsAsync(client.VAT, cancellationToken);
+            var additionalClientInformation = await _clientService.GetDetailsAsync(client.Vat, cancellationToken);
             if(additionalClientInformation == null)
             {
                 throw new ClientDetailsNotFoundException("Additional client information isn\'t supplied");
@@ -70,14 +71,12 @@ public class GetDocument
             var companyResponse = new CompanyResponse(additionalClientInformation.RegistrationNumber, additionalClientInformation.CompanyType);
 
             // Financial Data Anonymization:
-            var productProperties = _productPropertyRepository.Get().Where(x => x.Product.Code == request.ProductCode).ToList();
-            var anonymizedJson = rawDocument
-                .AnonymizeJson(productProperties.Where(x => x.PropertyRepresentationType == Domain.Enums.PropertyRepresentationType.Unchanged)
-                                    .Select(x => x.Property.Name)
-                                    .ToImmutableList(),
-                               productProperties.Where(x => x.PropertyRepresentationType == Domain.Enums.PropertyRepresentationType.Hash)
-                                    .Select(x => x.Property.Name)
-                                    .ToImmutableList());
+            var productProperties = _productPropertyRepository
+                                        .Get()
+                                        .Where(x => x.Product.Code.Equals(request.ProductCode, StringComparison.OrdinalIgnoreCase))
+                                        .Select(x => new PropertySettings(x.PropertyRepresentationType, x.Property.Name))
+                                        .ToList();
+            var anonymizedJson = rawDocument.AnonymizeJson(productProperties);
             if (string.IsNullOrEmpty(anonymizedJson))
             {
                 throw new ValidationException("Unable to parse document");

@@ -1,5 +1,6 @@
 ﻿using FinancialDocument.Application.Contracts.Repositories;
 using FinancialDocument.Application.Contracts.Services;
+using FinancialDocument.Domain.Entities;
 using FinancialDocument.Infrastructure.Services;
 using FinancialDocument.Infrastructure.UnitTests.Mocks;
 using Moq;
@@ -8,7 +9,7 @@ namespace FinancialDocument.Infrastructure.UnitTests.Services;
 
 public class TenantServiceTest
 {
-    private readonly Mock<ITenantRepository> _tenantRepositoryMock;
+    private readonly Mock<IDataRepository<Tenant>> _tenantRepositoryMock;
     private readonly CancellationToken _token;
 
     public TenantServiceTest()

@@ -20,8 +20,4 @@
     <ProjectReference Include="..\FinancialDocument.Domain\FinancialDocument.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Configurations\" />
-  </ItemGroup>
-
 </Project>
