@@ -12,9 +12,9 @@ public class GetDocument : IEndpoint
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet($"api/financialDocument", async ([FromServices] IMediator mediator, [FromBody] GetDocumentRequestDto request) =>
+        app.MapGet($"api/financialDocument", async ([FromServices] IMediator mediator, [FromBody] GetDocumentRequestDto request, CancellationToken cancellationToken) =>
         {
-            return await mediator.Send(new GetDocumentRequest(request.ProductCode, request.TenantId, request.DocumentId));
+            return await mediator.Send(new GetDocumentRequest(request.ProductCode, request.TenantId, request.DocumentId), cancellationToken);
         });
     }
 }
